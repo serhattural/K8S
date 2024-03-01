@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  namespace: etkbrehber
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      imagePullSecrets:
+      - name: nexusrepocred
+      containers:
+      - name: rehberng
+        image: nexus.enerji.gov.tr:5002/nginxkubrehber:1.0.2-k8test
+        ports:
+        - containerPort: 80
+        env:
+          - name: envconf
+            value: k8test
+        

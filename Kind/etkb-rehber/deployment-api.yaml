@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  namespace: etkbrehber
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      imagePullSecrets:
+      - name: nexusrepocred
+      containers:
+      - name: rehberapi-netcore
+        image: nexus.enerji.gov.tr:5002/rehberapi-prod:1.1.2
+        ports:
+        - containerPort: 80
