@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apple-deployment
+  namespace: etkb
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: apple-app
+  template:
+    metadata:
+      labels:
+        app: apple-app
+    spec:
+      containers:
+      - name: apple-app
+        image: hashicorp/http-echo
+        args:
+          - "-text=apple"
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: apple-service
+  namespace: etkb
+spec:
+  selector:
+    app: apple-app
+  ports:
+    - port: 5678
