@@ -1,0 +1,26 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: debezium-connector-postgresql-etkbmakam
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: debezium-connect-cluster
+spec:
+  class: io.debezium.connector.postgresql.PostgresConnector
+  tasksMax: 1
+  config:
+    tasks.max: 1
+    database.hostname: 10.0.221.69
+    database.port: 5000
+    database.user: makam_db_user
+    database.password: EneRjiMaKaM.1923
+    database.dbname: makam_db
+    database.server.id: 184054
+    topic.prefix: makam
+    #database.include.list: inventory
+    schema.history.internal.kafka.bootstrap.servers: my-cluster-kafka-bootstrap:9092
+    schema.history.internal.kafka.topic: schema-changes.makam_db
+    database.whitelist: makam_db
+    plugin.name: pgoutput
+    table.include.list: public.appointment
+    transforms.unwrap.drop.tombstones: false

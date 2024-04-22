@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  labels:
+    group: db
+data:
+  POSTGRES_DB: hive_metastore
+  POSTGRES_USER: hive
+  POSTGRES_PASSWORD: hivepass123
