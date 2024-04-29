@@ -1,0 +1,21 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: debezium-connector-elastic
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: debezium-connect-cluster-elastic
+spec:
+  class: com.ibm.eventstreams.connect.elasticsink.ElasticSinkConnector
+  tasksMax: 1
+  config:
+    es.connection: 10.244.0.64:9200
+    es.user.name: elastic
+    es.password: Fre8ndl2162pz1gf31R9ypY9
+    topics: postgres.inventory.products
+    es.document.builder: com.ibm.eventstreams.connect.elasticsink.builders.JsonDocumentBuilder
+    es.index.builder: com.ibm.eventstreams.connect.elasticsink.builders.DefaultIndexBuilder
+    es.identifier.builder: com.ibm.eventstreams.connect.elasticsink.builders.DefaultIdentifierBuilder
+    # key.converter: org.apache.kafka.connect.storage.StringConverter
+    # value.converter: org.apache.kafka.connect.json.JsonConverter
+    # value.converter.schemas.enable: false

@@ -1,0 +1,21 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: debezium-connector-elastic
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: debezium-connect-cluster-elastic-confluent
+spec:
+  class: io.confluent.connect.elasticsearch.ElasticsearchSinkConnector
+  tasksMax: 1
+  config:
+    connection.url: http://elasticsearch-es-http.elastic.svc.cluster.local:9200
+    connection.username: elastic
+    connection.password: Fre8ndl2162pz1gf31R9ypY9
+    topics: postgres.inventory.customers
+    key.converter: org.apache.kafka.connect.json.JsonConverter
+    key.converter.schemas.enable: false
+    value.converter: org.apache.kafka.connect.json.JsonConverter
+    value.converter.schemas.enable: false
+    schema.ignore: true
+    key.ignore: true
