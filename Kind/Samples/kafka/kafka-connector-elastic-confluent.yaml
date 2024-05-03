@@ -4,7 +4,7 @@ metadata:
   name: debezium-connector-elastic
   namespace: kafka
   labels:
-    strimzi.io/cluster: debezium-connect-cluster-elastic-confluent
+    strimzi.io/cluster: debezium-connect-cluster
 spec:
   class: io.confluent.connect.elasticsearch.ElasticsearchSinkConnector
   tasksMax: 1
@@ -12,10 +12,17 @@ spec:
     connection.url: http://elasticsearch-es-http.elastic.svc.cluster.local:9200
     connection.username: elastic
     connection.password: Fre8ndl2162pz1gf31R9ypY9
-    topics: postgres.inventory.customers
+    topics.regex: postgres.inventory.*
     key.converter: org.apache.kafka.connect.json.JsonConverter
     key.converter.schemas.enable: false
     value.converter: org.apache.kafka.connect.json.JsonConverter
     value.converter.schemas.enable: false
+    transforms: TimestampConverter
+    transforms.TimestampConverter.type: org.apache.kafka.connect.transforms.TimestampConverter$Value
+    transforms.TimestampConverter.format: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+    transforms.TimestampConverter.target.type: string
+    transforms.TimestampConverter.field : ts_ms
     schema.ignore: true
     key.ignore: true
+    #elastic.security.protocol: SSL
+    #elastic.https.ssl.endpoint.identification.algorithm: ""
