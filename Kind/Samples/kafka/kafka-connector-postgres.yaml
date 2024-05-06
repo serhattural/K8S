@@ -15,7 +15,7 @@ spec:
     database.user: debezium
     database.password: debezium
     database.dbname: debezium
-    topic.prefix: postgres
+    topic.prefix: debezium.testdb.inventory
     plugin.name: pgoutput
     schema.history.internal.kafka.bootstrap.servers: my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092
     #schema.history.internal.kafka.topic: schema-changes.inventory
@@ -23,3 +23,7 @@ spec:
     key.converter.schemas.enable: false
     value.converter: org.apache.kafka.connect.json.JsonConverter
     value.converter.schemas.enable: false
+    transforms: RemoveTableNameFromTopicName
+    transforms.RemoveTableNameFromTopicName.type: org.apache.kafka.connect.transforms.RegexRouter
+    transforms.RemoveTableNameFromTopicName.regex: debezium.testdb.inventory.*
+    transforms.RemoveTableNameFromTopicName.replacement: debezium.testdb.inventory
